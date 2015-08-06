@@ -1,0 +1,22 @@
+namenode:
+  build: .
+  hostname: namenode.hadoop.orctom.com
+  volumes:
+    - ~/.docker/hadoop/cluster/namenode:/var/lib/hadoop
+  ports:
+    - "9000:9000"
+    - "50070:50070"
+  command: -namenode
+
+datanode:
+  build: .
+  hostname: datanode.hadoop.orctom.com
+  volumes:
+    - ~/.docker/hadoop/cluster/datanode:/var/lib/hadoop
+  ports:
+    - "50010"
+    - "50020"
+    - "50075"
+  links:
+    - namenode
+

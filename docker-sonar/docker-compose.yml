@@ -1,0 +1,36 @@
+sonarci:
+  build: jenkins
+  ports: 
+    - "8080:8080"
+  volumes:
+    - /usr/lib/jvm/java_1.7_64/:/usr/lib/jvm/java_1.7_64/
+  links:
+    - sonarmysql
+
+sonar:
+  image: sonarqube
+  ports:
+    - "9000:9000"
+  links:
+    - sonarmysql
+  environment:
+    - SONARQUBE_JDBC_USERNAME=sonar
+    - SONARQUBE_JDBC_PASSWORD=sonar
+    - SONARQUBE_JDBC_URL=jdbc:mysql://sonarmysql:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+
+sonarmysql:
+  image: mysql
+  ports: 
+    - "3306:3306"
+    - MYSQL_ROOT_PASSWORD=sonar-root
+    - MYSQL_USER=sonar
+    - MYSQL_PASSWORD=sonar
+    - MYSQL_DATABASE=sonar
+
+nginx:
+  build: nginx
+  ports:
+    - "80:80"
+  links:
+    - sonar
+    - sonarci

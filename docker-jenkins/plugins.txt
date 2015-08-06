@@ -1,0 +1,9 @@
+email-ext
+token-macro
+scm-api
+git
+git-client
+github-api
+github
+jacoco
+junit
