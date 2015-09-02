@@ -29,6 +29,7 @@ COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
 
 # jenkins configuration
 COPY config $JENKINS_HOME/
+COPY email-templates $JENKINS_HOME/
 
 # prepare for ssh key generation
 COPY .ssh/ /etc/.ssh/
