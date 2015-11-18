@@ -1,4 +1,4 @@
-FROM orctom/jenkins:latest
+FROM orctom/jenkins:1.625.2
 
 # maven settings
 USER jenkins

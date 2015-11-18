@@ -1,4 +1,4 @@
-FROM orctom/java:8u51-jre
+FROM orctom/java:8u65-jre
 MAINTAINER Hao Chen <orctom@gmail.com>
 
 RUN \
