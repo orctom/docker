@@ -1,11 +1,11 @@
-FROM orctom/java:8u45-jre
+FROM orctom/java:7u79-jre
 
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $PATH:$CATALINA_HOME/bin
 RUN mkdir -p "$CATALINA_HOME"
 
-ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.0.24
+ENV TOMCAT_MAJOR 7
+ENV TOMCAT_VERSION 7.0.65
 ENV TOMCAT_DIST_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
 WORKDIR $CATALINA_HOME

@@ -1,4 +1,7 @@
-FROM orctom/java:8u51
+FROM orctom/java:8u65
+
+ENV MAVEN_VERSION 3.3.9
+ENV JENKINS_VERSION 1.625.2
 
 ENV JENKINS_HOME /var/lib/jenkins
 ENV MAVEN_HOME /usr/share/maven
@@ -8,12 +11,12 @@ RUN \
 	&& adduser -h "$JENKINS_HOME" -D -u 1000 -s /bin/sh jenkins \
 	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
-	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
+	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
 	&& tar -xf /tmp/apache-maven-bin.tar.gz -C $MAVEN_HOME --strip-components=1 \
 	&& ln -s $MAVEN_HOME/bin/mvn /usr/bin/mvn \
 	&& rm /tmp/apache-maven-bin.tar.gz \
 	&& mkdir -p /usr/share/jenkins/ \
-	&& curl -fL http://mirrors.jenkins-ci.org/war-stable/1.609.2/jenkins.war -o /usr/share/jenkins/jenkins.war
+	&& curl -fL http://mirrors.jenkins-ci.org/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
 
 # install plugins
 COPY plugins.sh /usr/share/jenkins/plugins.sh

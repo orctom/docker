@@ -1,7 +1,7 @@
 FROM alpine:3.2
 
 RUN \
-  apk add --update curl wget tar ca-certificates \
+  apk add --update curl wget bash tar ca-certificates \
   && cd /tmp \
   && wget "https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-2.21-r2.apk" \
   && wget "https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-bin-2.21-r2.apk" \
