@@ -3,8 +3,8 @@
 ## run jenkins
 
 ### built-in default configuration
-```sudo docker run -d -p 8080:8080 orctom/jenkins```
-```sudo docker run -it -p 8080:8080 orctom/jenkins -sh```
+```sudo docker run -d -p 8080:8080 orctom/jenkins:1.638```
+```sudo docker run -it -p 8080:8080 orctom/jenkins:1.638 -sh```
 
 ### customized settings.xml for Maven
 ```docker run -d -p 8080:8080 -v ~/.m2/settings.xml:/var/lib/jenkins/.m2/settings.xml orctom/jenkins```
