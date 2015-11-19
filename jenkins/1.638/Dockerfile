@@ -1,7 +1,7 @@
 FROM orctom/java:8u65
 
 ENV MAVEN_VERSION 3.3.9
-ENV JENKINS_VERSION 1.625.2
+ENV JENKINS_VERSION 1.638
 
 ENV JENKINS_HOME /var/lib/jenkins
 ENV MAVEN_HOME /usr/share/maven
@@ -16,7 +16,7 @@ RUN \
 	&& ln -s $MAVEN_HOME/bin/mvn /usr/bin/mvn \
 	&& rm /tmp/apache-maven-bin.tar.gz \
 	&& mkdir -p /usr/share/jenkins/ \
-	&& curl -fL http://mirrors.jenkins-ci.org/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
+	&& curl -fL http://mirrors.jenkins-ci.org/war/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
 
 # install plugins
 COPY plugins.sh /usr/share/jenkins/plugins.sh
