@@ -22,9 +22,10 @@ RUN \
 COPY plugins.sh /usr/share/jenkins/plugins.sh
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN \
-	chmod +x /usr/share/jenkins/plugins.sh; sync \
-	&& mkdir -p $JENKINS_HOME/plugins \
-	&& /usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
+	mkdir -p $JENKINS_HOME/plugins \
+	&& chmod +x /usr/share/jenkins/plugins.sh; \
+		sync; \
+		/usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
 	&& chown -R jenkins:jenkins $JENKINS_HOME
 
 # slave
