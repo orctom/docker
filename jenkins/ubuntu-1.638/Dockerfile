@@ -7,7 +7,7 @@ ENV JENKINS_HOME /var/lib/jenkins
 ENV MAVEN_HOME /usr/share/maven
 
 RUN \
-	apt-get update && apt-get install -y git ssh && rm -rf /var/lib/apt/lists/* \
+	apt-get update && apt-get install -y git ssh mailutils && rm -rf /var/lib/apt/lists/* \
 	&& useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins \
 	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
@@ -21,12 +21,15 @@ RUN \
 # install plugins
 COPY plugins.sh /usr/share/jenkins/plugins.sh
 COPY plugins.txt /usr/share/jenkins/plugins.txt
+RUN chmod +x /usr/share/jenkins/plugins.sh
 RUN \
 	mkdir -p $JENKINS_HOME/plugins \
-	&& chmod +x /usr/share/jenkins/plugins.sh; \
-		sync; \
-		/usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
+	&& /usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
 	&& chown -R jenkins:jenkins $JENKINS_HOME
+
+RUN \
+	touch /var/mail/jenkins \
+	&& chown jenkins:jenkins /var/mail/jenkins
 
 # slave
 COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
