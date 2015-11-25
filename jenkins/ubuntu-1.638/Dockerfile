@@ -1,20 +1,28 @@
 FROM orctom/java:ubuntu-8u65
 
-ENV MAVEN_VERSION 3.3.9
 ENV JENKINS_VERSION 1.638
+ENV MAVEN_VERSION 3.3.9
+ENV GRADLE_VERSION 2.9
 
 ENV JENKINS_HOME /var/lib/jenkins
 ENV MAVEN_HOME /usr/share/maven
+ENV GRADLE_HOME /usr/share/gradle
 
 RUN \
-	apt-get update && apt-get install -y git ssh mailutils && rm -rf /var/lib/apt/lists/* \
+	apt-get update && apt-get install -y git ssh unzip && rm -rf /var/lib/apt/lists/* \
 	&& useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins \
+	&& echo jenkins:jenkins | chpasswd \
+	&& adduser jenkins sudo \
 	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
 	&& tar -xf /tmp/apache-maven-bin.tar.gz -C $MAVEN_HOME --strip-components=1 \
 	&& ln -s $MAVEN_HOME/bin/mvn /usr/bin/mvn \
 	&& rm /tmp/apache-maven-bin.tar.gz \
+	&& curl -fL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o /tmp/gradle-${GRADLE_VERSION}-bin.zip \
+	&& unzip /tmp/gradle-${GRADLE_VERSION}-bin.zip -d /tmp/ \
+	&& mv /tmp/gradle-${GRADLE_VERSION} ${GRADLE_HOME} \
+	&& ln -s $GRADLE_HOME/bin/gradle /usr/bin/gradle \
 	&& mkdir -p /usr/share/jenkins/ \
 	&& curl -fL http://mirrors.jenkins-ci.org/war/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
 
@@ -26,10 +34,6 @@ RUN \
 	mkdir -p $JENKINS_HOME/plugins \
 	&& /usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
 	&& chown -R jenkins:jenkins $JENKINS_HOME
-
-RUN \
-	touch /var/mail/jenkins \
-	&& chown jenkins:jenkins /var/mail/jenkins
 
 # slave
 COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
