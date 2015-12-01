@@ -30,6 +30,9 @@ RUN \
 # slave
 COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
 
+# change owner
+RUN chown -R jenkins:jenkins $JENKINS_HOME
+
 # volume
 VOLUME ["$JENKINS_HOME"]
 
