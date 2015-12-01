@@ -30,7 +30,7 @@ RUN \
   && echo "installing IBM JDK 7" \
   && /opt/IBM/InstallationManager/eclipse/tools/imcl -acceptLicense -showProgress install com.ibm.websphere.IBMJAVA.v70_7.0.4001.20130510_2103 -repositories /opt/softwares/ibm/jdk/repository.config -installationDirectory /opt/IBM/WebSphere/AppServer/ \
   && echo "Creating default profile" \
-  && /opt/IBM/WebSphere/AppServer/bin/manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/default/
+  && /opt/IBM/WebSphere/AppServer/bin/manageprofiles.sh -create -templatePath /opt/IBM/WebSphere/AppServer/profileTemplates/default/ \
   && echo "Cleaning" \
   && rm /tmp/agent.installer.linux.gtk.x86_64_1.8.2000.20150303_1526.zip \
   && rm /tmp/was.repo.8550.developers.ilan_part1.zip \
@@ -43,4 +43,4 @@ RUN \
 
 EXPOSE 80 9080 9443 9060 9043 8879
 
-ENTRYPOINT ["startWAS.sh"]
+ENTRYPOINT ["/opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/startServer.sh", "server1"]
