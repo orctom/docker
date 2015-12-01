@@ -14,6 +14,8 @@ RUN \
   && curl -jkLH  "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${PACKAGE_TYPE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz -o /tmp/${PACKAGE_TYPE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
   && tar -xf /tmp/${PACKAGE_TYPE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz -C $JAVA_HOME --strip-components=1 \
   && rm /tmp/${PACKAGE_TYPE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
+  && ln -s $JAVA_HOME/bin/java /usr/bin/java \
+  && ln -s $JAVA_HOME/bin/javac /usr/bin/javac \
   && rm -rf $JAVA_HOME/*src.zip \
             $JAVA_HOME/lib/missioncontrol \
             $JAVA_HOME/lib/visualvm \
