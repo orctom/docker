@@ -1,13 +1,9 @@
 # docker jenkins
 
-## run jenkins
+Image chain:
+centos:7 <- orcotm/was:855 <- this
 
-### built-in default configuration
-```sudo docker run -d -p 8080:8080 orctom/jenkins:ubuntu-1.638```
-
-### customized settings.xml for Maven
-```docker run -d -p 8080:8080 -v ~/.m2/settings.xml:/var/lib/jenkins/.m2/settings.xml orctom/jenkins```
-
-## pre-installed plugins
-Add the IDs of plugins into plugins.txt one per line.
-
+This image is based on orcotm/was:855, which has a WebSphere 8.5.5 full profile and IBM JDK 7 installed.
+So that you can:
+ * Build projects that require IBM JDK 7.
+ * Utilize `wsadmin.sh` to do remote deployment.
