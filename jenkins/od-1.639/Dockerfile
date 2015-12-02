@@ -60,5 +60,5 @@ EXPOSE 52000
 
 USER jenkins
 
-ENTRYPOINT ["$JENKINS_HOME/bootstrap.sh"]
+ENTRYPOINT ["/var/lib/jenkins/bootstrap.sh"]
 CMD ["-d"]
