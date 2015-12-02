@@ -17,6 +17,11 @@
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
   <jdks>
     <jdk>
+      <name>ibm-7</name>
+      <home>/opt/IBM/WebSphere/AppServer/java_1.7_64</home>
+      <properties/>
+    </jdk>
+    <jdk>
       <name>oracle-8u51</name>
       <home>/usr/lib/jvm/java-8-oracle</home>
       <properties/>

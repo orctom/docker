@@ -49,6 +49,10 @@ COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
 # change owner
 RUN chown -R jenkins:jenkins "$JENKINS_HOME"
 
+# env for IBM_JAVA_HOME
+ENV IBM_JAVA_HOME /opt/IBM/WebSphere/AppServer/java_1.7_64
+ENV MAVEN_JAVA_HOME /opt/IBM/WebSphere/AppServer/java_1.7_64
+
 # volume
 VOLUME ["$JENKINS_HOME"]
 
