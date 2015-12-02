@@ -29,11 +29,20 @@ RUN \
 # slave
 COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
 
-# volume
-VOLUME ["$JENKINS_HOME"]
+# jenkins configuration
+COPY config $JENKINS_HOME/
+COPY email-templates $JENKINS_HOME/email-templates/
+
+# prepare for ssh key generation
+COPY .ssh/ /etc/.ssh/
+
+COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
 
 # change owner
-RUN chown -R jenkins:jenkins $JENKINS_HOME
+RUN chown -R jenkins:jenkins "$JENKINS_HOME"
+
+# volume
+VOLUME ["$JENKINS_HOME"]
 
 # for main web interface:
 EXPOSE 8080
@@ -43,14 +52,5 @@ EXPOSE 52000
 
 USER jenkins
 
-# jenkins configuration
-COPY config $JENKINS_HOME/
-COPY email-templates $JENKINS_HOME/email-templates/
-
-# prepare for ssh key generation
-COPY .ssh/ /etc/.ssh/
-
-COPY bootstrap.sh /etc/bootstrap.sh
-
-ENTRYPOINT ["/etc/bootstrap.sh"]
+ENTRYPOINT ["/var/lib/jenkins/bootstrap.sh"]
 CMD ["-d"]
