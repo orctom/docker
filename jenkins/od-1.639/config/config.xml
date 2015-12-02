@@ -22,8 +22,8 @@
       <properties/>
     </jdk>
     <jdk>
-      <name>oracle-8u51</name>
-      <home>/usr/lib/jvm/java-8-oracle</home>
+      <name>oracle-8u65</name>
+      <home>/usr/java/jdk1.8.0_65/</home>
       <properties/>
     </jdk>
   </jdks>
