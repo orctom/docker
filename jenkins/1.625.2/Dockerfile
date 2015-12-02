@@ -21,20 +21,19 @@ RUN \
 # install plugins
 COPY plugins.sh /usr/share/jenkins/plugins.sh
 COPY plugins.txt /usr/share/jenkins/plugins.txt
+RUN chmod +x /usr/share/jenkins/plugins.sh
 RUN \
-	chmod +x /usr/share/jenkins/plugins.sh; sync \
-	&& mkdir -p $JENKINS_HOME/plugins \
-	&& /usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt \
-	&& chown -R jenkins:jenkins $JENKINS_HOME
+	mkdir -p $JENKINS_HOME/plugins \
+	&& /usr/share/jenkins/plugins.sh /usr/share/jenkins/plugins.txt
 
 # slave
 COPY init.groovy $JENKINS_HOME/init.groovy.d/tcp-slave-agent-port.groovy
 
-# change owner
-RUN chown -R jenkins:jenkins $JENKINS_HOME
-
 # volume
 VOLUME ["$JENKINS_HOME"]
+
+# change owner
+RUN chown -R jenkins:jenkins $JENKINS_HOME
 
 # for main web interface:
 EXPOSE 8080

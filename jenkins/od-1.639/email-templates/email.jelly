@@ -1,0 +1,245 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define">
+    <body style="font-family: Courier New, Verdana, Helvetica, sans serif; font-size: 12px; color: black">
+        <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+            <j:set var="spc" value="&amp;nbsp;&amp;nbsp;" />
+            <!-- GENERAL INFO -->
+            <table style="width: 100%;">
+                <tr style="background-color:#f0f0f0;">
+                    <td align="right" style="font-size: 12px;"><j:choose>
+                        <j:when test="${build.result=='SUCCESS'}">
+                            <img src="https://ci.jenkins-ci.org/static/e59dfe28/images/32x32/blue.gif" />
+                        </j:when>
+                        <j:when test="${build.result=='FAILURE'}">
+                            <img src="https://ci.jenkins-ci.org/static/e59dfe28/images/32x32/red.gif" />
+                        </j:when>
+                        <j:otherwise>
+                            <img src="https://ci.jenkins-ci.org/static/e59dfe28/images/32x32/yellow.gif" />
+                        </j:otherwise>
+                    </j:choose></td>
+                    <td valign="center" style="font-size: 12px;"><b style="font-size: 200%;">BUILD ${build.result}</b></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Build URL</td>
+                    <td style="font-size: 12px;"><a href="${rooturl}${build.url}">${rooturl}${build.url}</a></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Project:</td>
+                    <td style="font-size: 12px;">${project.name}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Date of build:</td>
+                    <td style="font-size: 12px;">${it.timestampString}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Build duration:</td>
+                    <td style="font-size: 12px;">${build.durationString}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Build cause:</td>
+                    <td style="font-size: 12px;"><j:forEach var="cause" items="${build.causes}">${cause.shortDescription} </j:forEach></td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">Built on:</td>
+                    <td style="font-size: 12px;">
+                        <j:choose>
+                            <j:when test="${build.builtOnStr!=''}">${build.builtOnStr}</j:when>
+                            <j:otherwise>master</j:otherwise>
+                        </j:choose>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 12px;">-------------------</td>
+                    <td style="font-size: 12px;">-------------------</td>
+                </tr>
+                <j:set var="buildVariables" value="${build.buildVariables}" />
+                <j:if test="${buildVariables!=null}">
+                    <j:forEach var="param" items="${buildVariables}">
+                        <tr>
+                            <td style="font-size: 12px;">${param.key}</td>
+                            <td style="font-size: 12px;">${param.value}</td>
+                        </tr>
+                    </j:forEach>
+                </j:if>
+            </table>
+        </div>
+
+        <!-- HEALTH TEMPLATE -->
+        <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+            <j:set var="healthIconSize" value="16x16" />
+            <j:set var="healthReports" value="${project.buildHealthReports}" />
+            <j:if test="${healthReports!=null}">
+                <h2>Health Report</h2>
+                <table style="width: 100%;">
+                    <tr style="background-color:#f0f0f0;">
+                        <td><b>Weather</b></td>
+                        <td><b>Description</b></td>
+                        <td><b>Score</b></td>
+                    </tr>
+                    <j:forEach var="healthReport" items="${healthReports}">
+                        <tr>
+                            <td style="font-size: 12px;"><img src="https://ci.jenkins-ci.org/${healthReport.getIconUrl(healthIconSize)}" /></td>
+                            <td style="font-size: 12px;">${healthReport.description}</td>
+                            <td style="font-size: 12px;">${healthReport.score}</td>
+                        </tr>
+                    </j:forEach>
+                </table>
+                <br />
+            </j:if>
+        </div>
+
+        <!-- CHANGE SET -->
+        <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+            <j:set var="changeSet" value="${build.changeSet}" />
+            <j:if test="${changeSet!=null}">
+                <j:set var="hadChanges" value="false" />
+                <a href="${rooturl}${build.url}/changes">
+                    <h2>Changes</h2>
+                </a>
+                <j:forEach var="cs" items="${changeSet.logs}" varStatus="loop">
+                    <j:set var="hadChanges" value="true" />
+                    <b>[${cs.author}] ${cs.msgAnnotated}</b>
+                    <table style="width: 100%;">
+                        <j:forEach var="p" items="${cs.affectedFiles}">
+                            <tr>
+                                <td width="6%" style="font-size: 12px;">${spc}${p.editType.name}</td>
+                                <td style="font-size: 12px;">${p.path}</td>
+                            </tr>
+                        </j:forEach>
+                    </table>
+                    <br />
+                </j:forEach>
+                <j:if test="${!hadChanges}">
+                    <p>No Changes</p>
+                </j:if>
+            </j:if>
+        </div>
+
+        <!-- CONSOLE OUTPUT -->
+        <j:if test="${build.result=='FAILURE'}">
+            <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+                <a href="${rooturl}${build.url}/console">
+                    <h2>Console Output</h2>
+                </a>
+                <table style="font: normal normal 11px Courier New, monotype; padding:0px; margin:0px;">
+                    <j:forEach var="line" items="${build.getLog(150)}">
+                        <tr>
+                            <td style="font-size: 11px;"><tt>${line}</tt></td>
+                        </tr>
+                    </j:forEach>
+                </table>
+                <br />
+            </div>
+        </j:if>
+
+        <!-- JUnit TEMPLATE -->
+        <j:set var="junitResultList" value="${it.JUnitTestResult}" />
+        <j:if test="${junitResultList.isEmpty()!=true}">
+            <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+                <a href="${rooturl}${build.url}/testReport">
+                    <h2>JUnit Tests</h2>
+                </a>
+                <table style="border: 1px solid black; border-collapse:collapse; width: 100%;">
+                    <tr>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Package</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Failed</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Passed</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Skipped</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Total</th>
+                    </tr>
+                    <j:forEach var="junitResult" items="${it.JUnitTestResult}">
+                        <j:forEach var="packageResult" items="${junitResult.getChildren()}">
+                            <tr>
+                                <td style="border: 1px solid black; border-collapse:collapse;"><tt>${packageResult.getName()}</tt></td>
+                                <td style="border: 1px solid black; border-collapse:collapse; color:red;">${packageResult.getFailCount()}</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; color:blue;">${packageResult.getPassCount()}</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; color:grey;">${packageResult.getSkipCount()}</td>
+                                <td style="border: 1px solid black; border-collapse:collapse;"><b>${packageResult.getPassCount()+packageResult.getFailCount()+packageResult.getSkipCount()}</b></td>
+                            </tr>
+                            <j:forEach var="failed_test" items="${packageResult.getFailedTests()}">
+                                <tr>
+                                    <td style="color:red;" colspan="5">
+                                        <h4>${failed_test.getFullName()}</h4>
+                                        <p>${failed_test.getErrorDetails()}</p>
+                                        <pre style="min-width: 1200px; width: 100%;">${failed_test.getErrorStackTrace()}</pre>
+                                    </td>
+                                </tr>
+                            </j:forEach>
+                        </j:forEach>
+                    </j:forEach>
+                    <tr>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Package</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Failed</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Passed</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Skipped</th>
+                        <th style="border: 1px solid black; border-collapse:collapse;">Total</th>
+                    </tr>
+                </table>
+                <br />
+            </div>
+        </j:if>
+
+        <!-- JACOCO TEMPLATE -->
+        <j:set var="jacocoAction" value="${it.getAction('hudson.plugins.jacoco.JacocoBuildAction')}" />
+        <j:if test="${jacocoAction!=null}">
+            <j:set var="jacocoResult" value="${jacocoAction.result}" />
+            <j:if test="${jacocoResult!=null}">
+                <div style="background: #ffffff; border: dotted 1px #666; margin: 2px; content: 2px; padding: 2px;">
+                    <a href="${rooturl}${build.url}jacoco/">
+                        <h2>CodeCoverage Results</h2>
+                    </a>
+                    <table style="border: 1px solid black; border-collapse:collapse; width: 100%;">
+                        <tr>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Package</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Branches</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Complexity</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Instructions</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Methods</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Lines</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Classes</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black; border-collapse:collapse;"><a href="${rooturl}${build.url}jacoco/"><tt>OVERALL</tt></a></td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.branchCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.complexityScore.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.instructionCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.methodCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.lineCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.classCoverage.percentage}%</td>
+                        </tr>
+                        <j:forEach var="child" items="${jacocoResult.getChildren().entrySet()}">
+                            <j:set var="cResult" value="${child.value}" />
+                            <tr>
+                                <td style="border: 1px solid black; border-collapse:collapse;"><a href="${rooturl}${build.url}jacoco/${child.key}/"><tt>${child.key}</tt></a></td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.branchCoverage.percentage}%</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.complexityScore.percentage}%</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.instructionCoverage.percentage}%</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.methodCoverage.percentage}%</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.lineCoverage.percentage}%</td>
+                                <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${cResult.classCoverage.percentage}%</td>
+                            </tr>
+                        </j:forEach>
+                        <tr>
+                            <td style="border: 1px solid black; border-collapse:collapse;"><a href="${rooturl}${build.url}jacoco/"><tt>OVERALL</tt></a></td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.branchCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.complexityScore.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.instructionCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.methodCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.lineCoverage.percentage}%</td>
+                            <td style="border: 1px solid black; border-collapse:collapse; text-align:right;">${jacocoResult.classCoverage.percentage}%</td>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Package</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Branches</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Complexity</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Instructions</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Methods</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Lines</th>
+                            <th style="border: 1px solid black; border-collapse:collapse;">Classes</th>
+                        </tr>
+                    </table>
+                </div>
+            </j:if>
+        </j:if>
+    </body>
+</j:jelly>
+

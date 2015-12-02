@@ -1,6 +1,6 @@
-FROM orctom/java:ubuntu-8u65
+FROM orctom/was:855
 
-ENV JENKINS_VERSION 1.638
+ENV JENKINS_VERSION 1.639
 ENV MAVEN_VERSION 3.3.9
 ENV GRADLE_VERSION 2.9
 
@@ -9,7 +9,7 @@ ENV MAVEN_HOME /usr/share/maven
 ENV GRADLE_HOME /usr/share/gradle
 
 RUN \
-	apt-get update && apt-get install -y git ssh unzip && rm -rf /var/lib/apt/lists/* \
+	yum -y upgrade && yum -y install git ssh && yum clean all \
 	&& useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins \
 	&& echo jenkins:jenkins | chpasswd \
 	&& adduser jenkins sudo \

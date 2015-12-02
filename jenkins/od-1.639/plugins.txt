@@ -1,0 +1,16 @@
+credentials
+script-security
+token-macro
+mailer
+email-ext
+scm-api
+ssh-credentials
+git-client
+git
+github-api
+github
+plain-credentials
+github
+jacoco
+junit
+gradle
