@@ -10,7 +10,7 @@ ENV GRADLE_HOME /usr/share/gradle
 
 RUN \
 	apt-get update && apt-get install -y git ssh unzip && rm -rf /var/lib/apt/lists/* \
-	&& useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins \
+	&& useradd -d "/home/jenkins" -u 1000 -m -s /bin/bash jenkins \
 	&& echo jenkins:jenkins | chpasswd \
 	&& adduser jenkins sudo \
 	&& mkdir -p $JENKINS_HOME \

@@ -8,7 +8,7 @@ ENV MAVEN_HOME /usr/share/maven
 
 RUN \
 	apk add --update git openssh && rm -rf /var/cache/apk/* \
-	&& adduser -h "$JENKINS_HOME" -D -u 1000 -s /bin/sh jenkins \
+	&& adduser -h "/home/jenkins" -D -u 1000 -s /bin/sh jenkins \
 	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
