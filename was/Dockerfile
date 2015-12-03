@@ -36,6 +36,8 @@ RUN \
   && rm -rf /tmp/* \
   && rm -rf /opt/softwares
 
+ENV WAS_HOME /opt/IBM/WebSphere/AppServer
+
 EXPOSE 2809 9080 9443 9060 9043 8879
 
 ADD startWAS.sh /opt/startWAS.sh
