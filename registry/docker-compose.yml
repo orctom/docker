@@ -1,0 +1,22 @@
+repo:
+  restart: always
+  image: registry:2
+  ports:
+    - "5000:5000"
+  environment:
+    - SEARCH_BACKEND=sqlalchemy
+    # - SETTINGS_FLAVOR=s3
+    # - AWS_BUCKET=mybucket
+    # - STORAGE_PATH=/registry
+    # - AWS_KEY=myawskey
+    # - AWS_SECRET=myawssecret
+
+ui:
+  restart: always
+  image: hyper/docker-registry-web
+  ports:
+    - "8080:8080"
+  links:
+    - repo:registry
+  environment:
+    - REGISTRY_HOST=registry
