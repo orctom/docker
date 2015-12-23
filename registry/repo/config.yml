@@ -1,0 +1,19 @@
+version: 0.1
+log:
+    fields:
+        service: registry
+http:
+    addr: :5000
+storage:
+    cache:
+        layerinfo: inmemory
+    s3:
+        accesskey: <awsaccesskey>
+        secretkey: <awssecretkey>
+        region: <region>
+        bucket: <bucketname>
+        encrypt: false
+        secure: false
+        v4auth: false
+        chunksize: 5242880
+        rootdirectory: /

@@ -1,15 +1,8 @@
 repo:
   restart: always
-  image: registry:2
+  build: repo
   ports:
     - "5000:5000"
-  environment:
-    - SEARCH_BACKEND=sqlalchemy
-    # - SETTINGS_FLAVOR=s3
-    # - AWS_BUCKET=mybucket
-    # - STORAGE_PATH=/registry
-    # - AWS_KEY=myawskey
-    # - AWS_SECRET=myawssecret
 
 ui:
   restart: always
@@ -17,6 +10,6 @@ ui:
   ports:
     - "8080:8080"
   links:
-    - repo:registry
+    - repo:docker.orctom.com
   environment:
-    - REGISTRY_HOST=registry
+    - REGISTRY_HOST=docker.orctom.com
