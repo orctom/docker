@@ -2,16 +2,11 @@
 
 ## run jenkins
 
-### built-in default configuration
-```sudo docker run -d -p 8080:8080 orctom/jenkins:1.638```
-```sudo docker run -it -p 8080:8080 orctom/jenkins:1.638 -sh```
-
-### customized settings.xml for Maven
-```docker run -d -p 8080:8080 -v ~/.m2/settings.xml:/var/lib/jenkins/.m2/settings.xml orctom/jenkins```
-
-## pre-installed plugins
-Add the IDs of plugins into plugins.txt one per line.
-
-## Maven
- * Replace .m2/settings.xml with your own settings.xml
- * Don't change repository location
+```
+docker run -d \
+	--name jenkins \
+	-p 8080:8080 \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v $(which docker):$(which docker) \
+	orctom/jenkins:1.643
+```

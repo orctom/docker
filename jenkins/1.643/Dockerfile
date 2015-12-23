@@ -37,6 +37,7 @@ COPY email-templates $JENKINS_HOME/email-templates/
 COPY .ssh/ /etc/.ssh/
 
 COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
+COPY lib /usr/lib
 
 # change owner
 RUN chown -R jenkins:jenkins "$JENKINS_HOME"
