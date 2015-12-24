@@ -10,3 +10,5 @@ RUN \
   && echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf \
   && apk del ca-certificates \
   && rm /tmp/* /var/cache/apk/*
+
+COPY lib /usr/lib
