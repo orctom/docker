@@ -8,8 +8,6 @@ ENV MAVEN_HOME /usr/share/maven
 
 RUN \
 	apk add --update git openssh && rm -rf /var/cache/apk/* \
-	&& adduser -h "/home/jenkins" -D -u 1000 -s /bin/sh jenkins \
-	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
 	&& tar -xf /tmp/apache-maven-bin.tar.gz -C $MAVEN_HOME --strip-components=1 \
@@ -37,10 +35,6 @@ COPY email-templates $JENKINS_HOME/email-templates/
 COPY .ssh/ /etc/.ssh/
 
 COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
-COPY lib /usr/lib
-
-# change owner
-RUN chown -R jenkins:jenkins "$JENKINS_HOME"
 
 # volume
 VOLUME ["$JENKINS_HOME"]
@@ -50,8 +44,6 @@ EXPOSE 8080
 
 # will be used by attached slave agents:
 EXPOSE 52000
-
-USER jenkins
 
 ENTRYPOINT ["/var/lib/jenkins/bootstrap.sh"]
 CMD ["-d"]
