@@ -1,6 +1,6 @@
 FROM orctom/java:ubuntu-8u65
 
-ENV JENKINS_VERSION 1.638
+ENV JENKINS_VERSION 1.643
 ENV MAVEN_VERSION 3.3.9
 ENV GRADLE_VERSION 2.9
 
@@ -9,10 +9,7 @@ ENV MAVEN_HOME /usr/share/maven
 ENV GRADLE_HOME /usr/share/gradle
 
 RUN \
-	apt-get update && apt-get install -y git ssh unzip && rm -rf /var/lib/apt/lists/* \
-	&& useradd -d "/home/jenkins" -u 1000 -m -s /bin/bash jenkins \
-	&& echo jenkins:jenkins | chpasswd \
-	&& adduser jenkins sudo \
+	apt-get update && apt-get install -y git ssh unzip libapparmor-dev && rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
@@ -43,11 +40,9 @@ COPY email-templates $JENKINS_HOME/email-templates/
 
 # prepare for ssh key generation
 COPY .ssh/ /etc/.ssh/
+COPY lib /usr/lib64
 
 COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
-
-# change owner
-RUN chown -R jenkins:jenkins "$JENKINS_HOME"
 
 # volume
 VOLUME ["$JENKINS_HOME"]
