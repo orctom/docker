@@ -10,7 +10,6 @@ ENV GRADLE_HOME /usr/share/gradle
 
 RUN \
 	apt-get update && apt-get install -y git ssh unzip libapparmor-dev && rm -rf /var/lib/apt/lists/* \
-	&& mkdir -p $JENKINS_HOME \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
 	&& tar -xf /tmp/apache-maven-bin.tar.gz -C $MAVEN_HOME --strip-components=1 \
@@ -40,7 +39,6 @@ COPY email-templates $JENKINS_HOME/email-templates/
 
 # prepare for ssh key generation
 COPY .ssh/ /etc/.ssh/
-COPY lib /usr/lib64
 
 COPY bootstrap.sh $JENKINS_HOME/bootstrap.sh
 
@@ -52,8 +50,6 @@ EXPOSE 8080
 
 # will be used by attached slave agents:
 EXPOSE 52000
-
-USER jenkins
 
 ENTRYPOINT ["/var/lib/jenkins/bootstrap.sh"]
 CMD ["-d"]
