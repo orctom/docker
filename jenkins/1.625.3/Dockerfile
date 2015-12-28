@@ -20,7 +20,7 @@ RUN \
 	&& mv /tmp/gradle-${GRADLE_VERSION} ${GRADLE_HOME} \
 	&& ln -s $GRADLE_HOME/bin/gradle /usr/bin/gradle \
 	&& mkdir -p /usr/share/jenkins/ \
-	&& curl -fL http://mirrors.jenkins-ci.org/war/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
+	&& curl -fL http://mirrors.jenkins-ci.org/war-stable/${JENKINS_VERSION}/jenkins.war -o /usr/share/jenkins/jenkins.war
 
 # install plugins
 COPY plugins.sh /usr/share/jenkins/plugins.sh
