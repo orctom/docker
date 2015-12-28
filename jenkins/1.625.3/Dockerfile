@@ -8,7 +8,6 @@ ENV JENKINS_HOME /var/lib/jenkins
 ENV MAVEN_HOME /usr/share/maven
 ENV GRADLE_HOME /usr/share/gradle
 
-
 RUN \
 	apk add --update git openssh && rm -rf /var/cache/apk/* \
 	&& mkdir -p /usr/share/maven/ \
