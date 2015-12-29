@@ -11,7 +11,7 @@ ENV GRADLE_HOME /usr/share/gradle
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 
 RUN \
-	apk add --update git && rm -rf /var/cache/apk/* \
+	apk add --update git openssh && rm -rf /var/cache/apk/* \
 	&& mkdir -p /usr/share/maven/ \
 	&& curl -fL http://www.us.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven-bin.tar.gz \
 	&& tar -xf /tmp/apache-maven-bin.tar.gz -C $MAVEN_HOME --strip-components=1 \
