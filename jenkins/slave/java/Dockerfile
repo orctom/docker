@@ -24,4 +24,6 @@ RUN \
 	&& mkdir -p /usr/share/jenkins/ \
 	&& curl -fL http://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${SLAVE_VERSION}/remoting-${SLAVE_VERSION}.jar -o /usr/share/jenkins/slave.jar
 
+COPY .ssh/ /etc/.ssh/
+
 ENTRYPOINT ["jenkins-slave"]
