@@ -15,10 +15,10 @@ repo:
 
 ui:
   restart: always
-  image: hyper/docker-registry-web
+  image: orctom/docker-registry-ui
   ports:
     - "8080:8080"
   links:
     - repo:docker.orctom.com
   environment:
-    - REGISTRY_HOST=docker.orctom.com
+    - REGISTRY_URL=http://docker.orctom.com:5000
