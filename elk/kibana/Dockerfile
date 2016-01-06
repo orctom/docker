@@ -8,7 +8,8 @@ RUN \
   && tar -xf /tmp/kibana-${KIBANA_VERSION}-linux-x64.tar.gz -C $KIBANA_HOME --strip-components=1 \
   && rm /tmp/kibana-${KIBANA_VERSION}-linux-x64.tar.gz \
   && cd ${KIBANA_HOME} \
-  && bin/kibana plugin -i elastic/sense
+  && bin/kibana plugin --install elasticsearch/marvel/latest \
+  && bin/kibana plugin --install elastic/sense
 
 EXPOSE 5601
 
