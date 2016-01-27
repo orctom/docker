@@ -9,6 +9,7 @@ RUN \
   && tar -xf /tmp/logstash-${LOGSTASH_VERSION}.tar.gz -C $LOGSTASH_HOME --strip-components=1 \
   && rm /tmp/logstash-${LOGSTASH_VERSION}.tar.gz
 
-COPY logstash.sh /etc/logstash.sh
+COPY logstash.sh /etc/
+COPY logstash.conf /etc/
 
-CMD ["/etc/logstash.sh"]
+ENTRYPOINT ["/etc/logstash.sh"]
