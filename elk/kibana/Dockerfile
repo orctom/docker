@@ -1,6 +1,6 @@
 FROM orctom/java:8u65-jre
 
-ENV KIBANA_VERSION 4.3.1
+ENV KIBANA_VERSION 4.4.1
 ENV KIBANA_HOME /usr/share/kibana
 
 RUN \

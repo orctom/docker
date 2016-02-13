@@ -1,6 +1,6 @@
 FROM orctom/java:8u65-jre
 
-ENV ES_VERSION 2.1.1
+ENV ES_VERSION 2.2.0
 ENV ES_HOME /usr/share/elasticsearch
 
 RUN \
