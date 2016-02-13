@@ -5,7 +5,7 @@ ENV LOGSTASH_HOME /usr/share/logstash
 
 RUN \
   apk add --update ruby && rm -rf /var/cache/apk/* \
-  mkdir -p $LOGSTASH_HOME \
+  && mkdir -p $LOGSTASH_HOME \
   && curl -fL https://download.elastic.co/logstash/logstash/logstash-${LOGSTASH_VERSION}.tar.gz -o /tmp/logstash-${LOGSTASH_VERSION}.tar.gz \
   && tar -xf /tmp/logstash-${LOGSTASH_VERSION}.tar.gz -C $LOGSTASH_HOME --strip-components=1 \
   && rm /tmp/logstash-${LOGSTASH_VERSION}.tar.gz
