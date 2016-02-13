@@ -6,7 +6,7 @@ docker run \
 	--name kibana \
 	-p 5601:5601 \
 	--link es:es \
-	orctom/kibana:4.3.1
+	orctom/kibana:4.4.1
 ```
 ```
 docker run \
@@ -14,7 +14,7 @@ docker run \
 	--name kibana \
 	-p 5601:5601 \
 	-e ES_URL=http://172.17.0.1:9200 \
-	orctom/kibana:4.3.1
+	orctom/kibana:4.4.1
 ```
 
 ## Use
