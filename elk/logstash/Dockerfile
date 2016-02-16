@@ -1,6 +1,6 @@
 FROM orctom/java:8u65-jre
 
-ENV LOGSTASH_VERSION 2.1.1
+ENV LOGSTASH_VERSION 2.2.1
 ENV LOGSTASH_HOME /usr/share/logstash
 
 RUN \
@@ -9,6 +9,7 @@ RUN \
   && tar -xf /tmp/logstash-${LOGSTASH_VERSION}.tar.gz -C $LOGSTASH_HOME --strip-components=1 \
   && rm /tmp/logstash-${LOGSTASH_VERSION}.tar.gz
 
-COPY logstash.sh /etc/logstash.sh
+COPY logstash.sh /etc/
+COPY logstash.conf /etc/
 
-CMD ["/etc/logstash.sh"]
+ENTRYPOINT ["/etc/logstash.sh"]
