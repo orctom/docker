@@ -1,6 +1,6 @@
 FROM orctom/java:8u65-jre
 
-ENV LOGSTASH_VERSION 2.2.1
+ENV LOGSTASH_VERSION 1.5.2
 ENV LOGSTASH_HOME /usr/share/logstash
 
 RUN \
