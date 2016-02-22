@@ -14,10 +14,10 @@ RUN \
   && apk add --update git && rm -rf /var/cache/apk/* \
   && git config --global url."https://".insteadOf git://
 
-ONBUILD ADD bower.json /app/
-ONBUILD RUN bower install --allow-root
 ONBUILD ADD package.json /app/
 ONBUILD RUN npm installd
+ONBUILD ADD bower.json /app/
+ONBUILD RUN bower install --allow-root
 ONBUILD ADD . /app
 ONBUILD RUN gulp build
 
