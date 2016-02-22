@@ -1,7 +1,7 @@
 FROM orctom/alpine:3.2
 
 ENV NPM_CONFIG_LOGLEVEL warn
-NPM_CONFIG_LOGLEVEL NODE_VERSION 4.3.1
+ENV NODE_VERSION 4.3.1
 
 RUN \
   curl -fL https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz -o /tmp/node-v${NODE_VERSION}-linux-x64.tar.xz \
