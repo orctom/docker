@@ -11,7 +11,7 @@ RUN \
   && tar -zxf /tmp/nexus-iq-server-${IQ_SERVER_VERSION}-bundle.tar.gz -C $SONATYPE_HOME \
   && rm /tmp/nexus-iq-server-${IQ_SERVER_VERSION}-bundle.tar.gz
 
-COPY config.yml ${SONATYPE_WORK}
+COPY config.yml ${SONATYPE_WORK}/
 
 VOLUME ${SONATYPE_WORK}
 
