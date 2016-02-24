@@ -1,0 +1,178 @@
+#
+# NOTE: The indentation in this file is crucial for proper processing. Please keep the existing indentation when editing it.
+#
+
+# Directory for data files.
+sonatypeWork: /opt/sonatype-work/clm-server
+
+# Base URL of the Sonatype CLM server for user facing links back to the server.
+#baseUrl: http://localhost:8070/
+
+# Hour of the day(0-23) to schedule Policy Monitoring execution. The default is midnight.
+#policyMonitoringHour: 0
+
+# If true, allows anonymous policy evaluation from client tooling (e.g. CLI, CI, Maven).
+# If false forces authentication and disallows anonymous access.
+# Defaults to true for backward compatibility.
+anonymousClientAccessAllowed: true
+
+# Enables/disables cross-site request forgery protection. Defaults to true for increased security.
+#csrfProtection: true
+
+# A custom fragment to add to the "user-agent" for HTTP calls
+#userAgentSuffix: "example fragment"
+
+# HTTP-specific options.
+http:
+
+  # The port on which the HTTP server listens for service requests.
+  # Because Java cannot drop privileges in a POSIX system, these
+  # ports cannot be in the range 1-1024. A port value of 0 will
+  # make the OS use an arbitrary unused port.
+  port: 8070
+
+  # The port on which the HTTP server listens for administrative
+  # requests. Subject to the same limitations as "port".
+  adminPort: 8071
+
+  # We recommend that you password protect access to the admin services
+  #adminUsername: user1234
+  #adminPassword: pass5678
+
+  # The hostname of the interface to which the HTTP server socket
+  # will be bound. If omitted, the socket will listen on all
+  # interfaces.
+  #bindHost: 127.0.0.1  # only bind to loopback
+
+  # HTTP request log settings.
+  requestLog:
+
+    # Settings for logging to stdout.
+    console:
+
+      # If true, log requests to stdout.
+      enabled: false
+
+    # Settings for logging to a file.
+    file:
+
+      # If true, log requests to a file.
+      enabled: false
+
+      # The file to which current statements will be logged.
+      currentLogFilename: ./log/request.log
+
+      # When the log file rotates, the archived log will be renamed to this and gzipped. The
+      # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
+      # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".
+      archivedLogFilenamePattern: ./log/request-%d.log.gz
+
+      # The number of archived files to keep.
+      archivedFileCount: 5
+
+# Notification mail settings.
+# If enabled, ensure that the baseUrl configuration setting is also enabled and correct, because generated emails often contain links to the server.
+#mail:
+
+  # The host running the SMTP server to use. 
+  #hostname: "127.0.0.1"
+
+  # The port at which the SMTP server listens on. 
+  #port: 587
+
+  # The address used as From for outgoing notification mails sent by the server.
+  #systemEmail: "SonatypeCLM@localhost"
+
+  # The username used to access the mail server.
+  #username: "anonymous"
+
+  # The password used to access the mail server.
+  #password: "guest"
+  
+  # Connect using SSL.
+  #ssl: true
+  
+  # Connect using TLS.
+  #tls: true
+
+# Proxy settings.
+#proxy:
+
+  # The host running the proxy server to use.
+  #hostname: "127.0.0.1"
+
+  # The port at which the proxy server listens on.
+  #port: 80
+
+  # The username used to access the proxy server.
+  #username: "anonymous"
+
+  # The password used to access the proxy server.
+  #password: "guest"
+
+# Configures reverse proxy authentication for the web UI.
+#reverseProxyAuthentication:
+
+    # Enables/disables authentication via a reverse proxy. Once the reverse proxy has authenticated a user's identity,
+    # it is expected to forward the username to the CLM server via the HTTP header configured below. The CLM server
+    # will then consider the user logged in without further password prompt.
+    #
+    # WARNING: If improperly configured, this feature poses a security vulnerability. To guard against authentication
+    #   bypass it is crucial that all HTTP access to the CLM server is proxied such that the designated username header
+    #   is only settable by the reverse proxy that performs authentication and cannot be forged by end users themselves.
+    #
+    #enabled: false
+
+    # The name of the HTTP request header that carries the username of an authenticated user.
+    #usernameHeader: "REMOTE_USER"
+
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: WARN
+
+  # Logger-specific levels.
+  loggers:
+    "com.sonatype.insight.scan": INFO
+    "eu.medsea.mimeutil.MimeUtil2": INFO
+    "org.apache.http": INFO
+    "org.apache.http.wire": ERROR
+    "org.eclipse.birt.report.engine.layout.pdf.font.FontConfigReader": WARN
+    "org.eclipse.jetty": INFO
+    "org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter": INFO   # WARNING: This reveals credentials at DEBUG level
+
+  # Settings for logging to stdout.
+  console:
+
+    # If true, write log statements to stdout.
+    enabled: true
+
+    # Do not display log statements below this threshold to stdout.
+    threshold: INFO
+
+    logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
+
+  # Settings for logging to a file.
+  file:
+
+    # If true, write log statements to a file.
+    enabled: true
+
+    # Do not write log statements below this threshold to the file.
+    threshold: ALL
+
+    # The file to which current statements will be logged.
+    currentLogFilename: ./log/clm-server.log
+
+    # When the log file rotates, the archived log will be renamed to this and gzipped. The
+    # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
+    # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".
+    #
+    # If archive is true, this must be specified.
+    archivedLogFilenamePattern: ./log/clm-server-%d.log.gz
+
+    # The number of archived files to keep.
+    archivedFileCount: 5
+
+    logFormat: "%d{'yyyy-MM-dd HH:mm:ss,SSSZ'} %level [%thread] %X{username} %logger - %msg%n"
