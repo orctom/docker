@@ -2,7 +2,7 @@ FROM debian:jessie
 
 RUN \
   apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/* \
-  curl -fL http://emqtt.io/static/brokers/emqttd-debian64-1.0.1-beta-20160416.zip -o /tmp/emqttd-debian64-1.0.1-beta-20160416.zip \
+  && curl -fL http://emqtt.io/static/brokers/emqttd-debian64-1.0.1-beta-20160416.zip -o /tmp/emqttd-debian64-1.0.1-beta-20160416.zip \
   && unzip /tmp/emqttd-debian64-1.0.1-beta-20160416.zip -d /opt \
   && rm -rf /tmp/emqttd-debian64-1.0.1-beta-20160416.zip
 
