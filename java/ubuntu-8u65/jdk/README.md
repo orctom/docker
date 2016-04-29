@@ -1,16 +1,13 @@
-# Docker Oracle JDK Image
+# emqtt
 
-## What's in it
- * Base Image: `alpine:3.2` or `ubuntu:14.04.3`
- * Installed Packages: `curl`, `oracle jdk/jre`
- * Image Size: ~200 MB
+```
+docker run -p 1883:1883 orctom/emqtt
+```
 
-## How to use it
- * ```FROM orctom/java:ubuntu-8u65-jre```	(server jre, ubuntu:14.04.3)
- * ```FROM orctom/java:ubuntu-8u55```		(jdk, ubuntu:14.04.3)
- * ```FROM orctom/java:8u65-jre```			(server jre, alpine:3.2)
- * ```FROM orctom/java:8u55```				(jdk, alpine:3.2)
- * ```FROM orctom/java:8u51-jre```			(server jre, alpine:3.2)
- * ```FROM orctom/java:8u51```				(jdk, alpine:3.2)
- * ```FROM orctom/java:7u79-jre```			(server jre, alpine:3.2)
- * ```FROM orctom/java:7u79```				(jdk, alpine:3.2)
+```
+docker run -d --name emqtt -p 1883:1883 orctom/emqtt
+```
+
+## Some URLs:
+ * Status: http://localhost:8083/status
+ * Web dashboard: http://localhost:18083
