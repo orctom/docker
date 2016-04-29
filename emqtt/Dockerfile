@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN \
   apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/* \
   curl -fL http://emqtt.io/static/brokers/emqttd-debian64-1.0.1-beta-20160416.zip -o /tmp/emqttd-debian64-1.0.1-beta-20160416.zip \
-  && unzip /tmp/emqttd-debian64-1.0.1-beta-20160416.zip -d ${EMQTT_HOME} \
+  && unzip /tmp/emqttd-debian64-1.0.1-beta-20160416.zip -d /opt \
   && rm -rf /tmp/emqttd-debian64-1.0.1-beta-20160416.zip
 
 COPY emqttd.sh  /emqttd.sh
