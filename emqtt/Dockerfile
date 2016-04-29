@@ -1,13 +1,14 @@
 FROM debian:jessie
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV EMQTT_HOME /opt/emqtt
 
 RUN \
   apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/* \
   curl -fL http://emqtt.io/static/brokers/emqttd-debian64-1.0.1-beta-20160416.zip -o /tmp/emqttd-debian64-1.0.1-beta-20160416.zip \
   && unzip /tmp/emqttd-debian64-1.0.1-beta-20160416.zip -d ${EMQTT_HOME} \
   && rm -rf /tmp/emqttd-debian64-1.0.1-beta-20160416.zip
+
+COPY emqttd.sh  /emqttd.sh
 
 # http web dashboard
 EXPOSE 18083
@@ -18,4 +19,4 @@ EXPOSE 8883
 # http
 EXPOSE 8083
 
-CMD "${EMQTT_HOME}/bin/emqttd", "start"]
+CMD ["/emqttd.sh"]
