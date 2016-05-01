@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-ENV MOSQUITTO_VERSION=1.4.5
+ENV MOSQUITTO_VERSION=1.4.8
 
 RUN apt-get update \
   && apt-get install -y curl build-essential libssl-dev libc-ares-dev uuid-dev libmysqlclient-dev ca-certificates \
