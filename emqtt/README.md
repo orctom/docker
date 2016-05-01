@@ -3,7 +3,7 @@
 ## Run
 ```
 docker run \
-  -d --name mqtt \
+  -d --name emqtt \
   -p 18083:18083 \
   -p 1883:1883 \
   -p 8883:8883 \
@@ -13,7 +13,7 @@ docker run \
 
 ```
 docker run \
-  -d --name master \
+  -d --name emqtt-master \
   -e NODE_IP=<NODE_IP> \
   -p 18083:18083 \
   -p 1883:1883 \
@@ -24,7 +24,7 @@ docker run \
 
 ```
 docker run \
-  -d --name node \
+  -d --name emqtt-node \
   -e NODE_IP=<NODE_IP> \
   -e MASTER=<MASTER_NODE_IP> \
   -p 18083:18083 \
