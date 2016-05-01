@@ -14,7 +14,7 @@ RUN apt-get update \
 	&& sed -i "s/MOSQUITTO_SRC =/MOSQUITTO_SRC = ..\//" config.mk \
 	&& make \
 	&& cp auth-plug.so /usr/local/lib/ \
-	&& cp np /usr/bin/np \
+	&& cp np /usr/local/bin/np \
 	&& chmod +x /usr/local/bin/np \
 	&& apt-get remove --purge -y build-essential libssl-dev libc-ares-dev uuid-dev libmysqlclient-dev ca-certificates \
 	&& apt-get autoremove -y \
