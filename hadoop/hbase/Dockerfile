@@ -1,10 +1,7 @@
 FROM orctom/java:8u51-jre
 MAINTAINER Hao Chen <orctom@gmail.com>
 
-RUN \
-  apt-get update && apt-get install -y ssh rsync \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apk add --update curl tar ssh rsync && rm -rf /var/cache/apk/*
 
 # hadoop
 ENV HADOOP_VERSION 2.7.1
