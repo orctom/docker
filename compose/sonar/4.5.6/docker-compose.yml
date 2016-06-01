@@ -1,0 +1,44 @@
+nginx:
+  restart: always
+  build: nginx
+  ports:
+    - "80:80"
+  links:
+    - sonarqube
+    - jenkins
+
+sonarqube:
+  restart: always
+  image: sonarqube:4.5.6
+  ports:
+    - "9000:9000"
+  links:
+    - mysql
+  environment:
+    - SONARQUBE_JDBC_USERNAME=sonar
+    - SONARQUBE_JDBC_PASSWORD=sonar
+    - SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+
+jenkins:
+  restart: always
+  build: jenkins
+  ports: 
+    - "8080:8080"
+  extra_hosts:
+    - "nexus.uschecomrnd.net:10.95.64.71"
+    - "ci.uschecomrnd.net:10.95.197.181"
+    - "sonarci.uschecomrnd.net:10.95.64.71"
+    - "chrelay.officedepot.com:chrelay.officedepot.com"
+  links:
+    - mysql
+
+mysql:
+  restart: always
+  image: mysql
+  ports: 
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=sonar-root
+    - MYSQL_USER=sonar
+    - MYSQL_PASSWORD=sonar
+    - MYSQL_DATABASE=sonar

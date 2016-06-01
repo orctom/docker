@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  nginx:
+    restart: always
+    build: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - nexus
+  
+  nexus:
+    restart: always
+    image: orctom/nexus:2.12.1
+    volumes:
+      - sonatype_work:/opt/sonatype-work
+
+networks:
+  default:
+    driver: overlay
+
+volumes:
+  sonatype_work

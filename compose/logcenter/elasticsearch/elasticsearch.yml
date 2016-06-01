@@ -1,0 +1,16 @@
+bootstrap.mlockall: true
+network:
+  host : 0.0.0.0
+
+plugin.mandatory: cloud-aws
+
+cloud:
+	aws:
+		access_key: NOTMYACCESSKEYATALL
+		secret_key: ITw0UlDnTB3seCRetiFiPuTItHeR3
+
+discovery.type: ec2
+discovery.zen.ping.multicast.enabled: false
+discovery.ec2.tag.elk_cluster: elk_log
+
+network.publish_host: _ec2:privateIp_

@@ -1,0 +1,7 @@
+TID [0-9A-Za-z]{5,11}
+CATEGORY [A-Z]{1}
+TIMESTAMP %{MONTHNUM}/%{MONTHDAY}/%{YEAR}[T ]%{HOUR}:?%{MINUTE}(?::?%{SECOND})?
+ 
+CLASS (?:[\w+\.]){2,}\w+
+EXCEPTION (?:[\w+\.]){2,}\w+(?:Exception|Error)
+LOCATION ((?:[a-zA-Z0-9-]+\.){2,}[A-Z$]{1}[A-Za-z0-9]+)

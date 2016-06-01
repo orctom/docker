@@ -1,0 +1,68 @@
+{
+  "template": "logstash*",
+  "settings": {
+    "index.analysis.analyzer.default.stopwords": "_none_",
+    "index.number_of_replicas": "1",
+    "index.query.default_field": "message",
+    "index.refresh_interval": "5s",
+    "index.number_of_shards": "4",
+    "index.store.compress.stored": "true",
+    "index.analysis.analyzer.default.type": "standard",
+    "index.cache.field.type": "soft"
+  },
+  "mappings": {
+    "_default_": {
+      "_source": {
+        "compress": true
+      },
+      "dynamic_templates": [{
+        "string_fields": {
+          "mapping": {
+            "type": "multi_field",
+            "fields": {
+              "raw": {
+                "index": "not_analyzed",
+                "ignore_above": 256,
+                "type": "string"
+              },
+              "{name}": {
+                "index": "analyzed",
+                "omit_norms": true,
+                "index_options": "docs",
+                "type": "string"
+              }
+            }
+          },
+          "path_match": "fields.*",
+          "match_mapping_type": "string"
+        }
+      }],
+      "properties": {
+        "message": {
+          "index": "analyzed",
+          "type": "string"
+        },
+        "@timestamp": {
+          "index": "not_analyzed",
+          "type": "date"
+        },
+        "level": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "exception": {
+          "dynamic": true,
+          "path": "full",
+          "type": "object"
+        },
+        "messageTemplate": {
+          "index": "analyzed",
+          "type": "string"
+        }
+      },
+      "_all": {
+        "enabled": false
+      }
+    }
+  }
+}

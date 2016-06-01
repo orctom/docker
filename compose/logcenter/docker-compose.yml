@@ -1,0 +1,62 @@
+version: '2'
+
+services:
+  nginx:
+    restart: always
+    build: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - es
+      - kibana
+      - mq
+  
+  collector:
+    restart: always
+    build: collector
+    depends_on:
+      - mq
+  
+  mq:
+    restart: always
+    image: rabbitmq:3.6.0-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=mq
+      - RABBITMQ_DEFAULT_PASS=mq
+  
+  indexer:
+    restart: always
+    build: indexer
+    environment:
+      - WORKER_NO=2
+    depends_on:
+      - mq
+      - es
+      - collector
+  
+  es:
+    restart: always
+    image: orctom/elasticsearch:2.2.0
+    ports: 
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - ES_MAX_MEM=2g
+      - ES_CLUSTER_NAME=logcenter
+    volumes:
+      - /usr/share/elasticsearch/data:/var/lib/elasticsearch/data
+  
+  kibana:
+    restart: always
+    image: orctom/kibana:4.4.1
+    ports:
+      - "5601:5601"
+    depends_on:
+      - es
+
+networks:
+  default:
+    driver: overlay
