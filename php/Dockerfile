@@ -1,6 +1,6 @@
 FROM orctom/alpine:3.2
 
-ENV TIMEZONE UTC
+ENV TIMEZONE PRC
 ENV PHP_MEMORY_LIMIT 512M
 ENV MAX_UPLOAD 50M
 ENV PHP_MAX_FILE_UPLOAD 200
@@ -45,6 +45,7 @@ RUN apk update && apk upgrade && \
         php-fpm && \
     sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/php-fpm.conf && \
     sed -i -e "s/listen\s*=\s*127.0.0.1:9000/listen = 9000/g" /etc/php/php-fpm.conf && \
+    echo "clear_env = no" >> /etc/ssmtp/ssmtp.conf && \
     sed -i "s|;date.timezone =.*|date.timezone = ${TIMEZONE}|" /etc/php/php.ini && \
     sed -i "s|memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|" /etc/php/php.ini && \
     sed -i "s|upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|" /etc/php/php.ini && \
