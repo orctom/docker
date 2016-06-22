@@ -1,4 +1,4 @@
-FROM orctom/alpine:3.3
+FROM orctom/alpine:3.2
 
 ENV TIMEZONE UTC
 ENV PHP_MEMORY_LIMIT 512M
