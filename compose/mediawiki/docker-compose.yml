@@ -1,0 +1,26 @@
+
+sonarqube:
+  restart: always
+  image: sonarqube:4.5.6
+  ports:
+    - "9000:9000"
+  links:
+    - mysql
+  environment:
+    - MEDIAWIKI_DB_HOST=mysql
+    - MEDIAWIKI_DB_USER=mediawiki
+    - MEDIAWIKI_DB_PASSWORD=mediawiki
+
+mysql:
+  restart: always
+  image: mysql
+  ports: 
+    - "3307:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=mediawiki-root
+    - MYSQL_USER=mediawiki
+    - MYSQL_PASSWORD=mediawiki
+    - MYSQL_DATABASE=mediawiki
+
+docker run --name some-mediawiki -e MEDIAWIKI_DB_HOST=10.0.0.1:3306 \
+    -e MEDIAWIKI_DB_USER=app -e MEDIAWIKI_DB_PASSWORD=secure synctree/mediawiki
