@@ -7,7 +7,7 @@ client_ip=`ifconfig -a|awk '/(cast)/ {print $2}'|cut -d':' -f2|head -1`
 
 if [ $1 == "sh" ]; then
   exec "$@"
-elif [ $1 == "-join" ]; then
+elif [ $1 == "-join" || $1 == "-retry-join" ]; then
   consul agent \
     -server \
     -ui \
