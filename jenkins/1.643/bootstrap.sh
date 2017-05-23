@@ -6,7 +6,7 @@ set -e
 /etc/.ssh/gen_ssh_key.sh
 
 if [ $1 == "-d" ]; then
-	java -jar /usr/share/jenkins/jenkins.war
+  java -jar /usr/share/jenkins/jenkins.war
 fi
 
 if [ $1 == "-sh" ] || [ $1 == "sh" ]; then

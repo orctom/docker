@@ -2,13 +2,13 @@ FROM orctom/java:8u65-jre
 MAINTAINER Hao Chen <orctom@gmail.com>
 
 RUN \
-	apk add --update openssh rsync \
-	&& rc-update add sshd \
-	&& rc-status \
-	&& touch /run/openrc/softlevel \
-	&& /etc/init.d/sshd start \
-	&& /etc/init.d/sshd stop \
-	&& rm -rf /var/cache/apk/*
+  apk add --update openssh rsync \
+  && rc-update add sshd \
+  && rc-status \
+  && touch /run/openrc/softlevel \
+  && /etc/init.d/sshd start \
+  && /etc/init.d/sshd stop \
+  && rm -rf /var/cache/apk/*
 
 # hadoop
 ENV HADOOP_VERSION 2.7.1

@@ -6,9 +6,9 @@
  * Image Size: ~170 MB
 
 ## How to use it
- * ```FROM orctom/java:8u65-jre```	(server jre)
- * ```FROM orctom/java:8u55```		(jdk)
- * ```FROM orctom/java:8u51-jre```	(server jre)
- * ```FROM orctom/java:8u51```		(jdk)
- * ```FROM orctom/java:7u79-jre```	(server jre)
- * ```FROM orctom/java:7u79```		(jdk)
+ * ```FROM orctom/java:8u65-jre```  (server jre)
+ * ```FROM orctom/java:8u55```    (jdk)
+ * ```FROM orctom/java:8u51-jre```  (server jre)
+ * ```FROM orctom/java:8u51```    (jdk)
+ * ```FROM orctom/java:7u79-jre```  (server jre)
+ * ```FROM orctom/java:7u79```    (jdk)

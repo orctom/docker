@@ -3,7 +3,7 @@
 set -e
 
 if [ "$1" = "-d" ]; then
-	exec influxd
+  exec influxd
 fi
 
 exec "$@"

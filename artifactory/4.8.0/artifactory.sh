@@ -3,7 +3,7 @@
 set -e
 
 if [ "$1" = "-d" ]; then
-	exec ${ARTIFACTORY_HOME}/bin/artifactory.sh;
+  exec ${ARTIFACTORY_HOME}/bin/artifactory.sh;
 fi
 
 exec "$@"

@@ -30,7 +30,7 @@ docker run -d -p 5000:5000 registry
 
 ```
 docker run \
-	--restart on-failure:10 -d \
+  --restart on-failure:10 -d \
     -e SETTINGS_FLAVOR=s3 \
     -e AWS_BUCKET=docker-registry \
     -e STORAGE_PATH=/registry \

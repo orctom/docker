@@ -32,31 +32,31 @@ docker-compose up -d
 #### MQ
 ```
 docker run -d \
-	--name mq \
-	-p 15672:15672 \
-	-e RABBITMQ_DEFAULT_USER=mq \
-	-e RABBITMQ_DEFAULT_PASS=mq \
-	rabbitmq:3.6.0-management
+  --name mq \
+  -p 15672:15672 \
+  -e RABBITMQ_DEFAULT_USER=mq \
+  -e RABBITMQ_DEFAULT_PASS=mq \
+  rabbitmq:3.6.0-management
 ```
 
 #### Puller
 ```
 docker run -d \
-	--name logpuller \
-	--link mq:mq \
-	logcenter_logpuller
+  --name logpuller \
+  --link mq:mq \
+  logcenter_logpuller
 ```
 
 #### Elasticsearch
 ```
 docker run -d \
-	--name es \
-	-p 9200:9200 \
-	-p 9300:9300 \
-	-e ES_MAX_MEM=2g \
-	-e ES_CLUSTER_NAME=logcenter \
-	-v /usr/share/elasticsearch/data:/var/lib/elasticsearch/data \
-	orctom/elasticsearch:2.1.1
+  --name es \
+  -p 9200:9200 \
+  -p 9300:9300 \
+  -e ES_MAX_MEM=2g \
+  -e ES_CLUSTER_NAME=logcenter \
+  -v /usr/share/elasticsearch/data:/var/lib/elasticsearch/data \
+  orctom/elasticsearch:2.1.1
 ```
 
 #### mq
@@ -73,11 +73,11 @@ docker run -d \
 #### Indexer
 ```
 docker run -d \
-	--name indexer \
-	--link es:es \
-	--link mq:mq \
+  --name indexer \
+  --link es:es \
+  --link mq:mq \
   -e WORKER_NO=4 \
-	logcenter_indexer
+  logcenter_indexer
 ```
 
 ### debug
@@ -118,7 +118,7 @@ docker run -it --rm --link logcenter_mq_1:mq logstash logstash -e '
   } 
   output { 
     stdout {
-    	codec => rubydebug
+      codec => rubydebug
     } 
   }
   '

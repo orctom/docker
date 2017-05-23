@@ -5,9 +5,9 @@ network:
 plugin.mandatory: cloud-aws
 
 cloud:
-	aws:
-		access_key: NOTMYACCESSKEYATALL
-		secret_key: ITw0UlDnTB3seCRetiFiPuTItHeR3
+  aws:
+    access_key: NOTMYACCESSKEYATALL
+    secret_key: ITw0UlDnTB3seCRetiFiPuTItHeR3
 
 discovery.type: ec2
 discovery.zen.ping.multicast.enabled: false
